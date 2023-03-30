@@ -3,18 +3,24 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "gemtools_io"
+name = "gemtoolsio"
 version = "0.0.1"
 authors = [
     { name = "Robin LIORET", email = "robin.lioret@capgemini.com" }
 ]
 description = "A Generic Managment Tool package that helps with the file loading, saving and encryption."
 readme = "README.md"
+license = { file = "LICENSE" }
 requires-python = ">=3.9"
-classifiers  = [
+classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent"
+]
+dependencies = [
+    "cryptography~=40.0.1",
+    "PyYAML~=6.0",
+    "toml~=0.10.2"
 ]
 
 #[project.urls]

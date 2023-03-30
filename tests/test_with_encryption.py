@@ -5,8 +5,8 @@ from pathlib import Path
 from cryptography import fernet
 from cryptography.fernet import Fernet
 
-from src.gemtools_io import generate_key, save_encrypted_file, load_encrypted_file, encrypt_file, decrypt_file, encrypt, decrypt
-from src.gemtools_io.tools import _dumpers
+from src.gemtoolsio import generate_key, save_encrypted_file, load_encrypted_file, encrypt_file, decrypt_file, encrypt, decrypt
+from src.gemtoolsio.tools import _dumpers
 
 
 class TestIOEncryption(unittest.TestCase):

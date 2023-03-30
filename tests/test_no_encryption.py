@@ -1,8 +1,8 @@
 import shutil
 import unittest
 
-from src.gemtools_io import dump_string, load_string, save_file, load_file
-from src.gemtools_io.tools import _string_dumpers, _loaders, _dumpers
+from src.gemtoolsio import dump_string, load_string, save_file, load_file
+from src.gemtoolsio.tools import _string_dumpers, _loaders, _dumpers
 
 
 class TestIONoEncryption(unittest.TestCase):
