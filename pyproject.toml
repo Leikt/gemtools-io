@@ -23,6 +23,6 @@ dependencies = [
     "toml~=0.10.2"
 ]
 
-#[project.urls]
-#"Homepage" = ""
-#"Bug Tracker" = ""
+[project.urls]
+"Homepage" = "https://github.com/Leikt/gemtools-io"
+"Bug Tracker" = "https://github.com/Leikt/gemtools-io/issues"
