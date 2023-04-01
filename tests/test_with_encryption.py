@@ -54,10 +54,9 @@ class TestIOEncryption(unittest.TestCase):
         path.write_text(original)
 
         encrypt_file(path, self.key)
-        self.assertFalse(path.exists())
-        self.assertTrue(path.with_suffix('.txt.fer').exists())
+        self.assertTrue(path.exists())
+        self.assertNotEqual(original, path.read_text())
 
         decrypt_file(path, self.key)
-        self.assertFalse(path.with_suffix('.txt.fer').exists())
         self.assertTrue(path.exists())
         self.assertEqual(original, path.read_text())
