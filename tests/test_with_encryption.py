@@ -60,3 +60,12 @@ class TestIOEncryption(unittest.TestCase):
         decrypt_file(path, self.key)
         self.assertTrue(path.exists())
         self.assertEqual(original, path.read_text())
+
+    def test_key_generation(self):
+        key_path = self.base_path / 'dummy.key'
+        generate_key()
+        generate_key(key_path)
+        self.assertTrue(key_path.exists())
+        with self.assertRaises(PermissionError):
+            generate_key(key_path)
+        generate_key(key_path, allow_overwrite=True)

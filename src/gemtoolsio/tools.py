@@ -149,7 +149,8 @@ def save_encrypted_file(path: Union[str, PathLike], key: bytes, data: Any, allow
 
 
 def generate_key(path: Union[str, PathLike] = None, allow_overwrite=False) -> bytes:
-    path = Path(path)
+    if path is not None:
+        path = Path(path)
     key = fernet.Fernet.generate_key()
     if path is not None:
         if allow_overwrite is False and path.exists():
