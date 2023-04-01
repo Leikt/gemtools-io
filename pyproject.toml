@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "gemtoolsio"
-version = "1.0.3"
+version = "1.0.4"
 authors = [
     { name = "Robin LIORET", email = "robin.lioret@capgemini.com" }
 ]
