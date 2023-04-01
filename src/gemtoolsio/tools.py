@@ -154,14 +154,16 @@ def save_encrypted_file(path: Union[str, Path], key: bytes, data: Any, allow_ove
     real_path.write_bytes(data_bytes)
 
 
-def generate_key(path: Union[str, Path], allow_overwrite=False):
-    if allow_overwrite is False and path.exists():
-        msg = f'{path} already exists. To overwrite the file, use the allow_overwrite parameter.'
-        logging.critical(msg)
-        raise PermissionError(msg)
-
+def generate_key(path: Union[str, Path] = None, allow_overwrite=False) -> bytes:
     key = fernet.Fernet.generate_key()
-    path.write_bytes(key)
+    if path is not None:
+        if allow_overwrite is False and path.exists():
+            msg = f'{path} already exists. To overwrite the file, use the allow_overwrite parameter.'
+            logging.critical(msg)
+            raise PermissionError(msg)
+
+        path.write_bytes(key)
+    return key
 
 
 def encrypt_file(path: Union[str, Path], key: bytes):
