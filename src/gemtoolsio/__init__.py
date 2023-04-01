@@ -1,7 +1,8 @@
 import argparse
 
 from .tools import UnknownExtensionError, load_file, load_encrypted_file, decrypt_file, encrypt_file, \
-    save_encrypted_file, save_file, generate_key, encrypt, decrypt, load_string, dump_string
+    save_encrypted_file, save_file, generate_key, encrypt, decrypt, load_string, dump_string, register_string_dumper, \
+    register_loader, register_dumper, register_string_loader
 
 CMD = 'files'
 
