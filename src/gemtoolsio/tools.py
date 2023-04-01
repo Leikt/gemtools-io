@@ -1,6 +1,6 @@
 import json
 import logging
-import os
+from os import PathLike
 from pathlib import Path
 from typing import Any, Union, Callable, TextIO, Optional
 
@@ -74,9 +74,8 @@ def register_string_dumper(suffix: str, dumper: StringDumper, allow_overwrite: b
     _string_dumpers[suffix] = dumper
 
 
-def load_file(path: Union[str, Path]) -> Any:
-    if isinstance(path, str):
-        path = Path(path)
+def load_file(path: Union[str, PathLike]) -> Any:
+    path = Path(path)
     if not path.exists():
         raise FileNotFoundError(f'No such file {path}')
 
@@ -97,9 +96,8 @@ def load_string(stream: str, suffix: str) -> Any:
     return _string_loaders[suffix](stream)
 
 
-def save_file(path: Union[str, Path], data: Any, allow_overwrite: bool = False):
-    if isinstance(path, str):
-        path = Path(path)
+def save_file(path: Union[str, PathLike], data: Any, allow_overwrite: bool = False):
+    path = Path(path)
     if path.exists() and not allow_overwrite:
         msg = f'{path} already exists. To overwrite the file, use the allow_overwrite parameter.'
         logging.critical(msg)
@@ -123,19 +121,15 @@ def dump_string(obj: Any, suffix: str) -> str:
     return _string_dumpers[suffix](obj)
 
 
-def load_encrypted_file(path: Union[str, Path], key: bytes) -> Any:
-    if isinstance(path, str):
-        path = Path(path)
-
-    real_path = path.parent / (path.name + '.fer')
-    data_string = fernet.Fernet(key).decrypt(real_path.read_bytes()).decode('utf-8')
+def load_encrypted_file(path: Union[str, PathLike], key: bytes) -> Any:
+    path = Path(path)
+    data_string = fernet.Fernet(key).decrypt(path.read_bytes()).decode('utf-8')
 
     return load_string(data_string, path.suffix)
 
 
-def save_encrypted_file(path: Union[str, Path], key: bytes, data: Any, allow_overwrite: bool = False):
-    if isinstance(path, str):
-        path = Path(path)
+def save_encrypted_file(path: Union[str, PathLike], key: bytes, data: Any, allow_overwrite: bool = False):
+    path = Path(path)
     if path.exists() and not allow_overwrite:
         msg = f'{path} already exists. To overwrite the file, use the allow_overwrite parameter.'
         logging.critical(msg)
@@ -144,7 +138,7 @@ def save_encrypted_file(path: Union[str, Path], key: bytes, data: Any, allow_ove
 
     data_string = dump_string(data, path.suffix)
 
-    real_path = path.parent / (path.name + '.fer')
+    real_path = path.parent / path.name
     if real_path.exists() and not allow_overwrite:
         msg = f'{real_path} already exists. To overwrite the file, use the allow_overwrite parameter.'
         logging.critical(msg)
@@ -154,7 +148,8 @@ def save_encrypted_file(path: Union[str, Path], key: bytes, data: Any, allow_ove
     real_path.write_bytes(data_bytes)
 
 
-def generate_key(path: Union[str, Path] = None, allow_overwrite=False) -> bytes:
+def generate_key(path: Union[str, PathLike] = None, allow_overwrite=False) -> bytes:
+    path = Path(path)
     key = fernet.Fernet.generate_key()
     if path is not None:
         if allow_overwrite is False and path.exists():
@@ -166,13 +161,11 @@ def generate_key(path: Union[str, Path] = None, allow_overwrite=False) -> bytes:
     return key
 
 
-def encrypt_file(path: Union[str, Path], key: bytes):
-    if isinstance(path, str):
-        path = Path(path)
+def encrypt_file(path: Union[str, PathLike], key: bytes):
+    path = Path(path)
     data_bytes = path.read_bytes()
     data_bytes = fernet.Fernet(key).encrypt(data_bytes)
-    (path.parent / (path.name + '.fer')).write_bytes(data_bytes)
-    os.remove(path)
+    path.write_bytes(data_bytes)
 
 
 def encrypt(token: Union[str, bytes], key: bytes, encoding: str = 'utf-8') -> bytes:
@@ -180,13 +173,10 @@ def encrypt(token: Union[str, bytes], key: bytes, encoding: str = 'utf-8') -> by
     return fernet.Fernet(key).encrypt(data_bytes)
 
 
-def decrypt_file(path: Union[str, Path], key: bytes):
-    if isinstance(path, str):
-        path = Path(path)
-    real_path = path.parent / (path.name + '.fer')
-    data_bytes = fernet.Fernet(key).decrypt(real_path.read_bytes())
+def decrypt_file(path: Union[str, PathLike], key: bytes):
+    path = Path(path)
+    data_bytes = fernet.Fernet(key).decrypt(path.read_bytes())
     path.write_bytes(data_bytes)
-    os.remove(real_path)
 
 
 def decrypt(token: Union[str, bytes], key: bytes, encoding: str = 'utf-8') -> str:
