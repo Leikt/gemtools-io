@@ -14,7 +14,7 @@ def setup_main_parser(parser: argparse.ArgumentParser):
 def main(args):
     from pathlib import Path
 
-    parser = argparse.ArgumentParser(prog='gemtool io')
+    parser = argparse.ArgumentParser(prog='gemtoolsio')
     subparsers = parser.add_subparsers(title='Sub-Command', dest='command')
     subparsers.required = True
 
