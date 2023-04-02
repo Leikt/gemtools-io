@@ -37,12 +37,12 @@ def main(args):
     decrypt_parser.add_argument('key', type=Path, help='Path to the file containing the encryption key.')
 
     encrypt_parser = subparsers.add_parser('encrypt-string')
-    encrypt_parser.description = 'Encrypt the given file into a new one.'
+    encrypt_parser.description = 'Encrypt the given string and displays it to the screen.'
     encrypt_parser.add_argument('string', type=Path, help='String to encrypt.')
     encrypt_parser.add_argument('key', type=Path, help='Path to the file containing the encryption key.')
 
     decrypt_parser = subparsers.add_parser('decrypt-string')
-    decrypt_parser.description = 'Decrypt the given file into a new one.'
+    decrypt_parser.description = 'Decrypt the given string and displays it to the screen.'
     decrypt_parser.add_argument('string', type=Path, help='String to decrypt.')
     decrypt_parser.add_argument('key', type=Path, help='Path to the file containing the encryption key.')
 
