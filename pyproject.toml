@@ -20,7 +20,10 @@ classifiers = [
 dependencies = [
     "cryptography~=40.0.1",
     "PyYAML~=6.0",
-    "toml~=0.10.2"
+    "toml~=0.10.2",
+    "cryptography==40.0.1",
+    "pycparser==2.21",
+    "cffi==1.15.1"
 ]
 
 [project.urls]
