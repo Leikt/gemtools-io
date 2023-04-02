@@ -27,13 +27,23 @@ def main(args):
                                     'encrypted files inaccessible.')
 
     encrypt_parser = subparsers.add_parser('encrypt')
-    encrypt_parser.description = 'Encrypt the given file into a new one. Will add the extension ".fer" to the filename.'
+    encrypt_parser.description = 'Encrypt the given file into a new one.'
     encrypt_parser.add_argument('path', type=Path, help='Path to the file to encrypt.')
     encrypt_parser.add_argument('key', type=Path, help='Path to the file containing the encryption key.')
 
     decrypt_parser = subparsers.add_parser('decrypt')
     decrypt_parser.description = 'Decrypt the given file into a new one.'
-    decrypt_parser.add_argument('path', type=Path, help='Path to the file to encrypt (without the ".fer" extension).')
+    decrypt_parser.add_argument('path', type=Path, help='Path to the file to decrypt.')
+    decrypt_parser.add_argument('key', type=Path, help='Path to the file containing the encryption key.')
+
+    encrypt_parser = subparsers.add_parser('encrypt-string')
+    encrypt_parser.description = 'Encrypt the given file into a new one.'
+    encrypt_parser.add_argument('string', type=Path, help='String to encrypt.')
+    encrypt_parser.add_argument('key', type=Path, help='Path to the file containing the encryption key.')
+
+    decrypt_parser = subparsers.add_parser('decrypt-string')
+    decrypt_parser.description = 'Decrypt the given file into a new one.'
+    decrypt_parser.add_argument('string', type=Path, help='String to decrypt.')
     decrypt_parser.add_argument('key', type=Path, help='Path to the file containing the encryption key.')
 
     args = parser.parse_args(args)
@@ -47,3 +57,9 @@ def main(args):
     elif args.command == 'decrypt':
         key = args.key.read_bytes()
         decrypt_file(args.path, key)
+    elif args.command == 'encrypt-string':
+        key = args.key.read_bytes()
+        print(encrypt(args.string, key))
+    elif args.command == 'decrypt-string':
+        key = args.key.read_bytes()
+        print(decrypt(args.string, key))
