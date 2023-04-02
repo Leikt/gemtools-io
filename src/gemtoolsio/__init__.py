@@ -38,12 +38,12 @@ def main(args):
 
     encrypt_parser = subparsers.add_parser('encrypt-string')
     encrypt_parser.description = 'Encrypt the given string and displays it to the screen.'
-    encrypt_parser.add_argument('string', type=Path, help='String to encrypt.')
+    encrypt_parser.add_argument('string', type=str, help='String to encrypt.')
     encrypt_parser.add_argument('key', type=Path, help='Path to the file containing the encryption key.')
 
     decrypt_parser = subparsers.add_parser('decrypt-string')
     decrypt_parser.description = 'Decrypt the given string and displays it to the screen.'
-    decrypt_parser.add_argument('string', type=Path, help='String to decrypt.')
+    decrypt_parser.add_argument('string', type=str, help='String to decrypt.')
     decrypt_parser.add_argument('key', type=Path, help='Path to the file containing the encryption key.')
 
     args = parser.parse_args(args)
@@ -59,7 +59,7 @@ def main(args):
         decrypt_file(args.path, key)
     elif args.command == 'encrypt-string':
         key = args.key.read_bytes()
-        print(encrypt(args.string, key))
+        print(encrypt(args.string, key).decode())
     elif args.command == 'decrypt-string':
         key = args.key.read_bytes()
         print(decrypt(args.string, key))
